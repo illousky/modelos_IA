@@ -1,0 +1,13 @@
+Para construir un modelo de machine learning:
+
+    1 - Definir datos de entrenamiento con np.array (tanto entradas
+    como salidas)
+
+    2 - Definir el modelo con el metodo tf.keras y el tipo de
+    modelo que queramos (Sequential, Model, etc)
+
+    3 - Compilar el modelo, definiendo el optimizador y su funcion
+    de perdida.
+
+    4 - Entrenar el modelo [modelo.fit(entradas, salidas, epochs{numero
+    de veces que el modelo vera todo el conjunto de datos}, verbose)]
