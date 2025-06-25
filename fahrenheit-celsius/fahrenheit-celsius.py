@@ -32,8 +32,10 @@ except:
     historial = modelo.fit(fahrenheit, celsius, epochs=1000, verbose=False)
 
 # Probar el modelo con un valor nuevo
-resultado = modelo.predict(np.array([100.0]))
-print("100°F son aproximadamente %.2f°C" % resultado[0][0]) # Se usa resultado[0][0] para acceder al valor predicho ya que es un np.array
+fahrenheit_nuevo =  input("Ingrese la temperatura en °F para convertir a °C: ")
+fahrenheit_nuevo = float(fahrenheit_nuevo)  # Convertir la entrada a float
+resultado = modelo.predict(np.array([fahrenheit_nuevo]))  # Predecir el valor en °C
+print(str(fahrenheit_nuevo) + "°F son aproximadamente %.2f°C" % resultado[0][0]) # Se usa resultado[0][0] para acceder al valor predicho ya que es un np.array
 
 
 # Visualización del historial de entrenamiento si el modelo es nuevo
