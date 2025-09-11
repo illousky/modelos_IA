@@ -3,6 +3,11 @@ import torch.nn as nn
 import numpy as np
 import matplotlib.pyplot as plt
 
+class SinActivation(nn.Module): # Custom sine activation function
+    def forward(self, x):
+        return torch.sin(x)
+
+
 try:
     model = torch.load('math_sin_model.pth', weights_only=False)  # Load the saved model
     model.eval()  # Set the model to evaluation mode
@@ -15,12 +20,12 @@ try:
     negative = False
     if x < 0:
         negative = True
+        
+    if negative:
+        x = -x
     
     # Normalize x to be in range [-2π, 2π]
     x = x % (2 * np.pi)
-
-    if negative:
-        x = -x
 
     x_tensor = torch.tensor([[x]], dtype=torch.float32)  # Convert input to tensor
 
@@ -44,16 +49,16 @@ except FileNotFoundError:
 
     # Define the neural network model
     model = nn.Sequential(
-        nn.Linear(1, 128),  # Input layer with 1 input feature and 128 hidden units
-        nn.ReLU(),         # Activation function
-        nn.Linear(128, 128), # Hidden layer with 128 hidden units
-        nn.ReLU(),         # Activation function
-        nn.Linear(128, 1)   # Output layer with 1 output feature
+        nn.Linear(1, 256),  # Input layer with 1 input feature and 256 hidden units
+        SinActivation(), # Custom sine activation function
+        nn.Linear(256, 256), # Hidden layer with 256 hidden units
+        SinActivation(), # Custom sine activation function
+        nn.Linear(256, 1)   # Output layer with 1 output feature
     )
 
     # Loss function and optimizer
     loss_function = nn.MSELoss()  # Mean Squared Error loss
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.00001)  # Adam optimizer
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)  # Adam optimizer
 
     loss_history = []  # To store loss values for plotting
 
